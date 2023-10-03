@@ -1,0 +1,60 @@
+﻿@page "/employeemanagement"
+@using MudBlazor
+@using StaffSight.Models;
+@using StaffSight.Data;
+@using Microsoft.EntityFrameworkCore
+@inject ApplicationDbContext _context
+@inject IDialogService DialogService
+
+<PageTitle>Employee Management</PageTitle>
+<MudContainer>
+    <MudText Typo="Typo.h5">Employee Management</MudText>
+    <MudTable Items="@employees" Hover="true" Breakpoint="Breakpoint.Sm" Striped="true" OnRowClick="rowClickCallback">
+        <HeaderContent>
+            <MudTh>Employee ID</MudTh>
+            <MudTh>First Name</MudTh>
+            <MudTh>Last Name</MudTh>
+            <MudTh>Billet ID</MudTh>
+            <MudTh>Location</MudTh>
+            <MudTh>Branch ID</MudTh>
+            <MudTh>Expected Hire Date</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Employee ID">@context.EmpID</MudTd>
+            <MudTd DataLabel="First Name">@context.FirstName</MudTd>
+            <MudTd DataLabel="Last Name">@context.LastName</MudTd>
+            <MudTd DataLabel="Billet ID">@context.BilletID</MudTd>
+            <MudTd DataLabel="Location">@context.LocationName</MudTd>
+            <MudTd DataLabel="Branch ID">@context.BranchID</MudTd>
+            <MudTd DataLabel="Expected Hire Date">(@context.ExpectedHireDate).ToShortDateString()</MudTd>
+        </RowTemplate>
+
+    </MudTable>
+</MudContainer>
+
+@code {
+    private List<EmployeePreHire> employees;
+    private EventCallback<TableRowClickEventArgs<EmployeePreHire>> rowClickCallback;
+
+    protected override async Task OnInitializedAsync()
+    {
+        employees = await _context.EmployeePreHires.ToListAsync();
+        rowClickCallback = EventCallback.Factory.Create<TableRowClickEventArgs<EmployeePreHire>>(this, OnRowSelected);
+
+    }
+    
+    private async Task OnRowSelected(TableRowClickEventArgs<EmployeePreHire> args)
+    {
+        
+        var employee = args.Item;
+        Console.WriteLine("Function Activated.");
+        var parameters = new DialogParameters();
+        parameters.Add("Employee", employee);
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+
+        // var options = new DialogOptions() { MaxWidth = MaxWidth.Large };
+        
+        DialogService.Show<EmployeeDetailDialog>("Simple Dialog", parameters);
+        
+    }
+}

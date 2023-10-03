@@ -1,0 +1,35 @@
+﻿@inherits LayoutComponentBase
+@using MudBlazor
+@using StaffSight.Pages;
+@inject NavigationManager NavManager
+<MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme" />
+<MudLayout>
+    <MudMainContent>
+        <MudAppBar Color="Color.Primary">
+            <MudTabs>
+                <MudTabPanel Label="Employee Management" Icon="@Icons.Material.Filled.People" Text="Employees" OnClick="@(() => Navigate("/EmployeeManagement"))" />
+                <MudTabPanel Label="Billet Management" Icon="@Icons.Material.Filled.Work" Text="Billet Management" OnClick="@(() => Navigate("/Counter"))" />
+                <MudTabPanel Label="Roster Management" Icon="@Icons.Material.Filled.List" Text="Roster Management" />
+                <MudTabPanel Label="Training Classes" Icon="@Icons.Material.Filled.Class" Text="Training Classes" />
+                <MudTabPanel Label="Shift Management" Icon="@Icons.Material.Filled.Schedule" Text="Shift Management" />
+                <MudTabPanel Label="Audit Trail" Icon="@Icons.Material.Filled.History" Text="Audit Trail" />
+                <!-- Add more tabs as needed -->
+            </MudTabs>
+        </MudAppBar>
+        <div class="m-4">
+            @Body
+        </div>
+    </MudMainContent>
+    <!-- Left side filter bar can be added here if needed -->
+</MudLayout>
+
+@code {
+    private MudTheme _theme = new();
+    private bool _isDarkMode;
+
+    private void Navigate(string url)
+    {
+        NavManager.NavigateTo(url);
+    }
+
+}

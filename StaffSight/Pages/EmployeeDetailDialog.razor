@@ -1,0 +1,36 @@
+﻿@using MudBlazor
+@using StaffSight.Models  
+
+
+<h3>EmployeeDetailDialog</h3>
+<MudDialog>
+    <DialogContent>
+        <MudText Typo="Typo.h5">Employee Details</MudText>
+
+        <MudTextField Label="Employee ID" @bind-Value="@Employee.EmpID" Disabled="true" />
+         <MudTextField Label="First Name" @bind-Value="@Employee.FirstName" Disabled="true" />
+        <MudTextField Label="Last Name" @bind-Value="@Employee.LastName" Disabled="true" />
+        <MudTextField Label="Billet ID" @bind-Value="@Employee.BilletID" Disabled="true" Format="F0" />
+        <MudTextField Label="Location Name" @bind-Value="@Employee.LocationName" Disabled="true" />
+        <MudTextField Label="Branch ID" @bind-Value="@Employee.BranchID" Disabled="true" Format="F0"/>
+        <MudTextField Label="Expected Hire Date" @bind-Value="@Employee.ExpectedHireDate" Disabled="true" Format="yyyy-MM-dd"/>
+        <MudTextField Label="Salary" @bind-Value="@Employee.Salary" Disabled="true" Format="F2"/>
+        <MudTextField Label="Salary Type" @bind-Value="@Employee.SalaryType" Disabled="true" /> 
+
+        <!-- Add any other fields you want to display -->
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="CloseDialog">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    [Parameter] public EmployeePreHire Employee { get; set; }
+
+    private void CloseDialog()
+    {
+        MudDialog.Close();
+    }
+}
