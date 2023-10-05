@@ -1,0 +1,8 @@
+C:\Users\bryan\source\repos\StaffSight1\StaffSight\obj\Debug\net7.0\StaffSight.csproj.AssemblyReference.cache
+C:\Users\bryan\source\repos\StaffSight1\StaffSight\obj\Debug\net7.0\StaffSight.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\bryan\source\repos\StaffSight1\StaffSight\obj\Debug\net7.0\StaffSight.AssemblyInfoInputs.cache
+C:\Users\bryan\source\repos\StaffSight1\StaffSight\obj\Debug\net7.0\StaffSight.AssemblyInfo.cs
+C:\Users\bryan\source\repos\StaffSight1\StaffSight\obj\Debug\net7.0\StaffSight.csproj.CoreCompileInputs.cache
+C:\Users\bryan\source\repos\StaffSight1\StaffSight\obj\Debug\net7.0\StaffSight.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\bryan\source\repos\StaffSight1\StaffSight\obj\Debug\net7.0\StaffSight.RazorAssemblyInfo.cache
+C:\Users\bryan\source\repos\StaffSight1\StaffSight\obj\Debug\net7.0\StaffSight.RazorAssemblyInfo.cs

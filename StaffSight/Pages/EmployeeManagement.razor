@@ -1,0 +1,87 @@
+﻿@page "/employee-management"
+@using StaffSight.Models
+@using StaffSight.Data
+@using Radzen.Blazor
+@using Radzen
+@using System.Linq
+@using Microsoft.EntityFrameworkCore
+@inject PosMgmtDBContext dbContext
+
+
+<div class="filter-section">
+    <h3>Filters</h3>
+
+    <RadzenDropDown Multiple="true" Placeholder="Select ClassID" Data="@(new string[] { "No Class Assigned", "Class1", "Class2" })" @bind-Value="@selectedClassIds" Style="width:100%; margin-bottom: 10px;" />
+
+    <!-- Continue adding filters for Hire Date, EmpID, Last Name, and so on... -->
+
+    <RadzenButton Text="Clear Filters" Click="@ClearFilters" Style="margin-right:10px" />
+    <RadzenButton Text="Submit" Click="@ApplyFilters" />
+</div>
+
+<RadzenDataGrid TItem="EmployeePrehire" Data="@employees" ColumnWidth="200px" PageSize="@pageSize" AllowPaging="true"
+                AllowSorting="true" LoadData="@OnLoadData" Count="@totalCount">
+    <Columns>
+        <RadzenDataGridColumn TItem="EmployeePrehire" Property="EmpID" Title="Employee ID" />
+        <RadzenDataGridColumn TItem="EmployeePrehire" Property="FirstName" Title="First Name" />
+        <!-- Continue adding columns for Last Name, Hire Date, Branch, and so on... -->
+    </Columns>
+</RadzenDataGrid>
+
+@code {
+    private List<string> selectedClassIds = new List<string>();
+    private int currentPage = 0; // starts from 0
+    private int pageSize = 15;  // default page size
+    private string sortBy = "EmpID"; // default sort column
+    private bool sortDescending = false; // default sort direction
+    private int totalCount;
+
+
+    private List<EmployeePrehire> employees;
+
+    private void ClearFilters()
+    {
+        selectedClassIds = null;
+        // Reset other filters
+    }
+
+    private void ApplyFilters()
+    {
+        // Apply the filters to the grid (will integrate with the database later)
+    }
+    private void LoadData()
+    {
+        // Apply filters, if any (will integrate later)
+        var query = dbContext.EmployeePrehires.AsQueryable();
+
+        // Sorting
+        if (sortDescending)
+        {
+            query = query.OrderByDescending(e => e.EmpID);
+        }
+        else
+        {
+            query = query.OrderBy(e => e.EmpID);
+        }
+
+        // Fetch total count for pagination info
+        totalCount = query.Count();
+
+        // Apply pagination
+        employees = query.Skip(currentPage * pageSize).Take(pageSize).ToList();
+    }
+    private void OnLoadData(LoadDataArgs args)
+    {
+        currentPage = args.Skip.Value / args.Top.Value; // calculate the current page
+        pageSize = args.Top.Value;
+        sortBy = args.OrderBy ?? "EmpID"; // column name
+        sortDescending = args.OrderByDescending.Value;
+
+        LoadData();
+    }
+    protected override void OnInitialized()
+    {
+        LoadData();
+        base.OnInitialized();
+    }
+}
